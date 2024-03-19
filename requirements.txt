@@ -2,3 +2,4 @@ kafka-python
 fastapi
 uvicorn
 pymysql
+aiohttp
