@@ -54,10 +54,11 @@ def insert_data_to_database():
         # Xác nhận các thay đổi
         connection.commit()
 
+        connection.close()
     except Exception as e:
         print(f"An error occurred in insert_data_to_database: {e}")
 
-async def convert_to_vietnam_time(time_str):
+def convert_to_vietnam_time(time_str):
     try:
         # Phân tích chuỗi thời gian thành đối tượng datetime
         time_utc = parser.parse(time_str)
@@ -76,43 +77,42 @@ async def convert_to_vietnam_time(time_str):
     except Exception as e:
         return None
 
-async def get_location_info(location):
+def get_location_info(location):
     try:
         url = f"https://nominatim.openstreetmap.org/search?q={location}&format=json"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                if response.status_code == 200:
-                    data = await response.json()
-                    if data:
-                        display_name = data[0]['display_name'].split(',')
-                        if len(display_name) >= 3:
-                            state_1 = display_name[-3].strip()
-                        else:
-                            state_1 = None
-                        
-                        if len(display_name) >= 2:
-                            state_2 = display_name[-2].strip()
-                        else:
-                            state_2 = None
-                        
-                        country = display_name[-1].strip()
-
-                        location_info = {
-                            "latitude": data[0]['lat'],
-                            "longitude": data[0]['lon'],  
-                            "state_1": state_1,        
-                            "state_2": state_2,
-                            "country": country,
-                        }
-                        return location_info
-                    else:
-                        return None
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            if data:
+                display_name = data[0]['display_name'].split(',')
+                if len(display_name) >= 3:
+                    state_1 = display_name[-3].strip()
                 else:
-                    return None
+                    state_1 = None
+                
+                if len(display_name) >= 2:
+                    state_2 = display_name[-2].strip()
+                else:
+                    state_2 = None
+                
+                country = display_name[-1].strip()
+
+                location_info = {
+                    "latitude": data[0]['lat'],
+                    "longitude": data[0]['lon'],  
+                    "state_1": state_1,        
+                    "state_2": state_2,
+                    "country": country,
+                }
+                return location_info
+            else:
+                return None
+        else:
+            return None
     except Exception as e:
         return None
     
-async def send_data_to_kafka(data):
+def send_data_to_kafka(data):
     try:
         # Khởi tạo producer Kafka
         producer = KafkaProducer(bootstrap_servers=['leesin.click:9092'],
@@ -126,7 +126,8 @@ async def send_data_to_kafka(data):
     except Exception as e:
         print(f"An error occurred while sending data to Kafka: {str(e)}")
 
-async def call_api():
+def call_api():
+    print("Task in progress")
     insert_data_to_database()
     try:  
         # Lấy các bản ghi từ cơ sở dữ liệu có status = 0
@@ -167,7 +168,7 @@ async def call_api():
                         user_followers_count = x['author']['followers']
                         user_location = x['author']['location']
 
-                        location_info = await get_location_info(user_location)
+                        location_info = get_location_info(user_location)
                         if location_info:
                             latitude = location_info.get('latitude', None)
                             longitude = location_info.get('longitude', None)
@@ -178,8 +179,8 @@ async def call_api():
                             latitude, longitude, state_1, state_2, country = None, None, None, None, None
                         
                         # Chuyển đổi chuỗi ngày tháng thành đối tượng datetime
-                        created_at = await convert_to_vietnam_time(created_at_str)
-                        user_join_date = await convert_to_vietnam_time(user_join_date_str)
+                        created_at = convert_to_vietnam_time(created_at_str)
+                        user_join_date = convert_to_vietnam_time(user_join_date_str)
 
                         # Tạo câu lệnh SQL để chèn dữ liệu vào bảng
                         sql = "INSERT INTO B (created_at, tweet_id, tweet, likes, retweet_count, user_id, \
@@ -203,7 +204,7 @@ async def call_api():
 
                         if country == 'United States' and (state_1 in states or state_2 in states):
                             # Gửi dữ liệu vào Kafka
-                            await send_data_to_kafka({
+                            send_data_to_kafka({
                                 "created_at": created_at,
                                 "tweet_id": tweet_id,
                                 "tweet": tweet,
@@ -229,9 +230,9 @@ async def call_api():
                 print(f"Task {record_id} completed at {current_time}")
             else:
                 print(f"Failed to call API for record {record_id}. Status code: {response.status_code}")
-
-        # Đóng kết nối
-        connection.close()
         
+        connection.close()
+        print("Task has ended")
+
     except Exception as e:
         print(f"An error occurred in call_api(): {str(e)}")
