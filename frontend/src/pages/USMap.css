@@ -1,0 +1,30 @@
+.MuiTooltip-tooltip {
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+    border-top: 10px solid #5755FE !important;
+}
+
+.row p {
+    font-size: 15px;
+    margin: 4px;
+}
+  
+.candidate-header,
+.vote-header {
+    background-color: #f0f0f0;
+    opacity: 0.75;
+    border-right: 1px solid #ccc; 
+}
+  
+.row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}
+  
+.candidate,
+.vote {
+    flex-basis: 50%; 
+    padding: 0 10px;
+}
