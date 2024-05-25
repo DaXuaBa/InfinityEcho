@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 import data from "../data/usa-map-dimensions";
 import moment from 'moment';
 
-const USMap = () => {
+const BTG = () => {
   const statesData = data();
   const [tooltipContent, setTooltipContent] = useState(""); 
   const [sentiData, setSentiData] = useState([]);
@@ -33,13 +33,20 @@ const USMap = () => {
   }, []);
 
   const getFillColor = (stateAbbr) => {
-    const stateEntries = sentiData.filter(entry => entry.state_code === stateAbbr);
-    if (stateEntries.length === 0) return "bg-gray-400";
-  
-    const bidenTotal = stateEntries.filter(entry => entry.name === 'biden').reduce((acc, curr) => acc + curr.total, 0);
-    const trumpTotal = stateEntries.filter(entry => entry.name === 'trump').reduce((acc, curr) => acc + curr.total, 0);
-  
-    return bidenTotal > trumpTotal ? '#8B93FF' : '#FF71CD';
+    const state = statesData[stateAbbr];
+    if (!state) return "bg-gray-400";
+
+    if (state.battleground) {
+        const stateEntries = sentiData.filter(entry => entry.state_code === stateAbbr);
+        if (stateEntries.length === 0) return "#D1D5DB";
+
+        const bidenTotal = stateEntries.filter(entry => entry.name === 'biden').reduce((acc, curr) => acc + curr.total, 0);
+        const trumpTotal = stateEntries.filter(entry => entry.name === 'trump').reduce((acc, curr) => acc + curr.total, 0);
+
+        return bidenTotal > trumpTotal ? '#8B93FF' : '#FF71CD';
+    } else {
+        return "#D1D5DB";
+    }
   };
 
   const handleMouseEnter = (abbr) => {
@@ -133,7 +140,7 @@ const USMap = () => {
   return (
     <svg width="960" height="600" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg">
       <text x="45%" y="20" textAnchor="middle" fill="#333" fontSize="26" fontWeight="bold">
-        My Election
+      Battleground State
       </text>
       <text x="600" y="17" fill="#000" fontSize="16" fontWeight="bold">
         <tspan fill="#8B93FF" fontSize="24">●</tspan> Biden
@@ -182,4 +189,4 @@ const USMap = () => {
   );
 };
 
-export default USMap;
+export default BTG;

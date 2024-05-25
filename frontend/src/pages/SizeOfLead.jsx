@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 import data from "../data/usa-map-dimensions";
 import moment from 'moment';
 
-const USMap = () => {
+const SOL = () => {
   const statesData = data();
   const [tooltipContent, setTooltipContent] = useState(""); 
   const [sentiData, setSentiData] = useState([]);
@@ -39,7 +39,16 @@ const USMap = () => {
     const bidenTotal = stateEntries.filter(entry => entry.name === 'biden').reduce((acc, curr) => acc + curr.total, 0);
     const trumpTotal = stateEntries.filter(entry => entry.name === 'trump').reduce((acc, curr) => acc + curr.total, 0);
   
-    return bidenTotal > trumpTotal ? '#8B93FF' : '#FF71CD';
+    const totalVotes = bidenTotal + trumpTotal;
+    const leadPercentage = totalVotes === 0 ? 0 : (Math.abs(bidenTotal - trumpTotal) / totalVotes) * 100;
+
+    if (leadPercentage >= 10) {
+      return bidenTotal > trumpTotal ? '#0079FF' : '#FF6969'; 
+    } else if (leadPercentage >= 5) {
+      return bidenTotal > trumpTotal ? '#9AC8CD' : '#FFD3B0'; 
+    } else {
+      return bidenTotal > trumpTotal ? '#E1F7F5' : '#FFF9DE';
+    }
   };
 
   const handleMouseEnter = (abbr) => {
@@ -133,13 +142,17 @@ const USMap = () => {
   return (
     <svg width="960" height="600" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg">
       <text x="45%" y="20" textAnchor="middle" fill="#333" fontSize="26" fontWeight="bold">
-        My Election
+        Size Of Lead
       </text>
-      <text x="600" y="17" fill="#000" fontSize="16" fontWeight="bold">
-        <tspan fill="#8B93FF" fontSize="24">●</tspan> Biden
+      <text x="600" y="17" fill="#000" fontSize="16" fontWeight="bold">Biden
+        <tspan fill="#E1F7F5" fontSize="24">●</tspan>0-5%{"\n"}
+        <tspan fill="#9AC8CD" fontSize="24">●</tspan>5-10%{"\n"}
+        <tspan fill="#0079FF" fontSize="24">●</tspan>10%+
       </text>
-      <text x="600" y="37" fill="#000" fontSize="16" fontWeight="bold">
-        <tspan fill="#FF71CD" fontSize="24">●</tspan> Trump
+      <text x="600" y="37" fill="#000" fontSize="16" fontWeight="bold">Trump
+        <tspan fill="#FFF9DE" fontSize="24">●</tspan>0-5%{"\n"}
+        <tspan fill="#FFD3B0" fontSize="24">●</tspan>5-10%{"\n"}
+        <tspan fill="#FF6969" fontSize="24">●</tspan>10%+
       </text>
       {Object.keys(statesData).map((stateKey) => {
         const state = statesData[stateKey];
@@ -182,4 +195,4 @@ const USMap = () => {
   );
 };
 
-export default USMap;
+export default SOL;

@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from backend.db import model
-from backend.db.database import engine
 from backend.router import router_tweet
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,13 +9,11 @@ list_router = [
 ]
 
 for router in list_router: 
-    app.include_router(router,prefix="/sys-be") 
+    app.include_router(router) 
 
 @app.get("/")
 async def read_root():
-    return {"message": "Hello, FastAPI!"}
-
-model.Base.metadata.create_all(bind=engine)
+    return {"message": "Hello, my name is Back!"}
 
 origins = [
     'http://localhost:5173'
