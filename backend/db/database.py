@@ -1,29 +1,25 @@
-from influxdb_client import InfluxDBClient
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from urllib.parse import quote_plus
 
-def connect_to_database(url, token, org):
-    return InfluxDBClient(url=url, token=token, org=org)
+username = "root"
+password = "123456"
+host = "localhost"
+port = "3306"
+database_name = "daxu"
+encoded_password = quote_plus(password)
+SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{username}:{encoded_password}@{host}:{port}/{database_name}"
 
-def close_connection(client):
-    client.close()
+engine=create_engine(SQLALCHEMY_DATABASE_URL)
 
-def query_data(client):
-    query = '''
-        from(bucket: "daxuba")
-            |> range(start: -30d)
-            |> filter(fn: (r) => r["_measurement"] == "trump" or r["_measurement"] == "biden")
-            |> group(columns: ["state_code", "_measurement"])
-            |> sum()
-        '''
-    query_api = client.query_api()
-    return query_api.query(org='daxuba', query=query)
+SessionLocal = sessionmaker(autocommit=False,bind=engine)
 
-def query_time(client):
-    query = '''
-        from(bucket: "daxuba")
-            |> range(start: -30d)
-            |> filter(fn: (r) => r["_measurement"] == "trump" or r["_measurement"] == "biden")
-            |> group(columns: ["state_code", "_measurement"])
-            |> last()
-        '''
-    query_api = client.query_api()
-    return query_api.query(org='daxuba', query=query)
+Base = declarative_base()
+
+def get_db():
+    db=SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

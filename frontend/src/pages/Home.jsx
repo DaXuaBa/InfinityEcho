@@ -6,6 +6,7 @@ import FS from './FlippedSeats';
 import StateResult from './StateResult';
 import ElectioneersPage from './ElectioneersPage';
 import GetData from './GetData';
+import ElectionSummary from './ElectionSummary';
 
 export default function Home() {
   const [showMap, setShowMap] = useState(true);
@@ -54,22 +55,28 @@ export default function Home() {
       <div className='flex flex-col justify-center items-center gap-6 p-25 px-3'>
         <ElectioneersPage/>
       </div>
-      <div className="w-full mt-10 flex justify-center gap-12">
-          <div className="flex items-center">
-            <span className='text-lg antialiased font-serif'>Shell</span>
-          </div>
-          <div className="flex items-center">
-              <img src="b.jpg" alt="BP" className="w-12" />
-          </div>
-          <div className="flex items-center">
-              <img src="c.jpg" alt="Chevron" className="w-12" />
-          </div>
-          <div className="flex items-center">
-            <span className='text-lg font-serif	antialiased italic'>Chevron</span>
-          </div>
-          <div className="flex items-center">
-            <span className='text-lg subpixel-antialiased font-sans'>ExxonMobil</span>
-          </div>
+      <div className="w-full mt-4 flex justify-center gap-10">
+        <a href="https://www.w3.org/html/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="html.svg" alt="HTML" className="w-8" />
+        </a>
+        <a href="https://www.w3.org/Style/CSS/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="css.svg" alt="CSS" className="w-8" />
+        </a>
+        <a href="https://www.javascript.com/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="js.svg" alt="JavaScript" className="w-8" />
+        </a>
+        <a href="https://reactjs.org/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="re.svg" alt="React" className="w-8" />
+        </a>
+        <a href="https://vitejs.dev/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="vite.svg" alt="Vite" className="w-8" />
+        </a>
+        <a href="https://tailwindcss.com/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="tw.svg" alt="Tailwind CSS" className="w-8" />
+        </a>
+        <a href="https://fastapi.tiangolo.com/" target="_blank" className="flex items-center justify-center w-16 h-16 rounded-full border-2 border-gray-200 bg-white shadow-md">
+          <img src="fa.svg" alt="FastAPI" className="w-8" />
+        </a>
       </div>
       <div className="my-20 h-[6px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
       <div className='flex items-center justify-evenly'>
@@ -107,8 +114,9 @@ export default function Home() {
         {showFS ? <FS /> : null}
       </div>
 
-      <div className="my-20 h-[6px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-      <p className='mb-10 text-4xl text-teal-500 font-bold hover:underline text-center'>STATE RESULTS</p>
+      <div className="mt-20 h-[6px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+      <ElectionSummary />
+      <p className='my-10 text-4xl text-teal-500 font-bold hover:underline text-center'>STATE RESULTS</p>
       <div className="flex justify-center items-center my-8">
         <iframe
           src="http://leesin.click:3000/d-solo/cdlslwhwvgruob/election?orgId=1&from=1715776706815&to=1715787506815&panelId=1"

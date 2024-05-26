@@ -1,5 +1,8 @@
 from fastapi import FastAPI
+from backend.db import models
+from backend.db.database import engine
 from backend.router import router_tweet
+from backend.router.job_update import *
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -12,8 +15,13 @@ for router in list_router:
     app.include_router(router) 
 
 @app.get("/")
-async def read_root():
-    return {"message": "Hello, my name is Back!"}
+async def index():
+    return "Một bông hoa đẹp, không nên thuộc về một kẻ chỉ biết ngắm chứ không biết chăm"
+
+models.Base.metadata.create_all(bind=engine)
+
+app.add_event_handler("startup", start_scheduler)
+app.add_event_handler("shutdown", shutdown_scheduler)
 
 origins = [
     'http://localhost:5173'

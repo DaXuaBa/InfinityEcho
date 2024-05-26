@@ -120,7 +120,7 @@ const USMap = () => {
             <div className="text-right mr-3"><p>{trumpTotal}</p></div>
           </div>
           <p className='font-bold text-xs mt-1 ml-2'>VN. 99% ln</p>
-          <p className='text-xs m-0 ml-2'>Update {formattedTime}</p>
+          <p className='text-xs m-0 ml-2'>Updated: {formattedTime}</p>
       </div>
       )
     setTooltipContent(tooltipContent);

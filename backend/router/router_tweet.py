@@ -1,5 +1,8 @@
-from fastapi import APIRouter
-from backend.db.database import *
+from fastapi import APIRouter, Depends
+from backend.db.db_tweet import *
+from backend.db.database import get_db
+from backend.schemas import *
+
 router = APIRouter()
 
 @router.get('/get_data')
@@ -40,3 +43,21 @@ async def get_time_router():
             json_data.append(fields)
     close_connection(client)
     return json_data
+
+def fetch_and_process_csv_data(db: Session = Depends(get_db)):
+    client = connect_to_database(
+        'http://34.105.70.61:8086', 
+        'WQ4gPkdoKvsTeLlNEnDJlFYn4VawArsIhki2KcHK8rJBoiJYif1KIHB-oJHjYD0QDLJz0quk0cnldFplbYaunA==', 
+        'daxuba'
+    )
+    try:
+        csv_data = process_csv_data(client, db=db)
+        close_connection(client)
+        print("OK")
+        return csv_data
+    except Exception as e:
+        return print("error: " + str(e))
+    
+@router.get('/get_summary', response_model=SummaryBase)
+async def get_last_summary(db: Session = Depends(get_db)):
+    return await get_summary(db=db)
