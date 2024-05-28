@@ -6,7 +6,6 @@ import csv
 import io
 import requests
 
-
 def connect_to_database(url, token, org):
     return InfluxDBClient(url=url, token=token, org=org)
 

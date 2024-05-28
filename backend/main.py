@@ -24,7 +24,8 @@ app.add_event_handler("startup", start_scheduler)
 app.add_event_handler("shutdown", shutdown_scheduler)
 
 origins = [
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://leesin.click:5173'
 ]
 
 app.add_middleware(
