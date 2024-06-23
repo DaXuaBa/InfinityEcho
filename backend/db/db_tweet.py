@@ -73,7 +73,7 @@ def process_csv_data(client, db: Session):
         return summary
 
     # Tạo nội dung cho "system" và "user"
-    system_content = "Phân tích dữ liệu bầu cử và viết đoạn văn ngắn về lợi thế của các ứng cử viên bằng Tiếng Việt"
+    system_content = "Phân tích dữ liệu bầu cử hiện tại và viết đoạn văn ngắn về lợi thế của các ứng cử viên bằng Tiếng Việt"
     user_content = create_election_summary(csv_text)
 
     payload = {
