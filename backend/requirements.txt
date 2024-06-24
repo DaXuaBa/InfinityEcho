@@ -2,3 +2,8 @@ fastapi
 SQLAlchemy
 influxdb_client
 uvicorn
+kafka-python
+nltk
+pyspark
+scikit-learn==1.3.2
+lightgbm
