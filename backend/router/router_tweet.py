@@ -1,9 +1,15 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, BackgroundTasks
 from backend.db.db_tweet import *
 from backend.db.database import get_db
 from backend.schemas import *
+from backend.db.biden_data_processing import *
+from backend.db.trump_data_processing import *
+from pydantic import BaseModel
 
 router = APIRouter()
+
+class AnyData(BaseModel):
+    pass
 
 @router.get('/get_data')
 async def get_data():
@@ -53,7 +59,6 @@ def fetch_and_process_csv_data(db: Session = Depends(get_db)):
     try:
         csv_data = process_csv_data(client, db=db)
         close_connection(client)
-        print("OK")
         return csv_data
     except Exception as e:
         return print("error: " + str(e))
@@ -61,3 +66,13 @@ def fetch_and_process_csv_data(db: Session = Depends(get_db)):
 @router.get('/get_summary', response_model=SummaryBase)
 async def get_last_summary(db: Session = Depends(get_db)):
     return await get_summary(db=db)
+
+@router.post("/biden_receive")
+def receive_json(background_tasks: BackgroundTasks, data: AnyData, db: Session = Depends(get_db)):
+    background_tasks.add_task(call_api_biden, db)
+    return {"message": "Task completed"}
+
+@router.post("/trump_receive")
+def receive_json(background_tasks: BackgroundTasks, data: AnyData, db: Session = Depends(get_db)):
+    background_tasks.add_task(call_api_trump, db)
+    return {"message": "Task completed"}
