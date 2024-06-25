@@ -1,17 +1,16 @@
 from kafka import KafkaProducer
-from datetime import datetime
 import time
 from json import dumps
 import pandas as pd
 from configparser import ConfigParser
 
-conf_file_name = "X:\\2023-24\\Nam_4_HK2\\github\\InfinityEcho\\stream_processing\\send_data\\trump\\stream_app.conf"
+conf_file_name = "X:\\2023-24\\Nam_4_HK2\\github\\InfinityEcho\\stream_processing\\send_data\\stream_app.conf"
 config_obj = ConfigParser()
 config_read_obj = config_obj.read(conf_file_name)
 
 kafka_host_name = config_obj.get('kafka', 'host')
 kafka_port_no = config_obj.get('kafka', 'port_no')
-kafka_topic_name = config_obj.get('kafka', 'input_topic_name')
+kafka_topic_name = config_obj.get('kafka', 'input_topic_name_trump')
 
 KAFKA_TOPIC_NAME_CONS = kafka_topic_name
 KAFKA_BOOTSTRAP_SERVERS_CONS = kafka_host_name + ':' + kafka_port_no

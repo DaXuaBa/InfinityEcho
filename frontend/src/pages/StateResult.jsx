@@ -78,7 +78,7 @@ const StateResult = () => {
             <p className="text-lg font-bold mb-2.5 text-gray-800">{state.name}
               <span className="inline-block">{isFlip && (
                 <img
-                  src="https://politics-static.cnn.io/2020/static-assets/images/icons/icon-partyflip.svg"
+                  src="./icon-partyflip.svg"
                   alt="Flip"
                   className="w-4 h-4 ml-1"
                 />

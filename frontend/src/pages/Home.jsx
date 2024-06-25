@@ -119,7 +119,7 @@ export default function Home() {
       <p className='my-10 text-4xl text-teal-500 font-bold hover:underline text-center'>STATE RESULTS</p>
       <div className="flex justify-center items-center my-8">
         <iframe
-          src="http://leesin.click:3000/d-solo/cdlslwhwvgruob/election?orgId=1&from=1715776706815&to=1715787506815&panelId=1"
+          src="http://172.207.210.69:3000/d-solo/ddpt5y96q5ipse/new-dashboard?orgId=1&refresh=1m&panelId=1"
           width="1050"
           height="400"
         ></iframe>
