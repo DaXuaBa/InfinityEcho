@@ -14,8 +14,8 @@ class AnyData(BaseModel):
 @router.get('/get_data')
 async def get_data():
     client = connect_to_database(
-        'http://34.105.70.61:8086', 
-        'WQ4gPkdoKvsTeLlNEnDJlFYn4VawArsIhki2KcHK8rJBoiJYif1KIHB-oJHjYD0QDLJz0quk0cnldFplbYaunA==', 
+        'http://172.207.210.69:8086', 
+        '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw==', 
         'daxuba'
     )
     result = query_data(client)
@@ -34,8 +34,8 @@ async def get_data():
 @router.get('/get_time')
 async def get_time_router():
     client = connect_to_database(
-        'http://34.105.70.61:8086', 
-        'WQ4gPkdoKvsTeLlNEnDJlFYn4VawArsIhki2KcHK8rJBoiJYif1KIHB-oJHjYD0QDLJz0quk0cnldFplbYaunA==', 
+        'http://172.207.210.69:8086', 
+        '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw==', 
         'daxuba'
     )
     result = query_time(client)
@@ -52,8 +52,8 @@ async def get_time_router():
 
 def fetch_and_process_csv_data(db: Session = Depends(get_db)):
     client = connect_to_database(
-        'http://34.105.70.61:8086', 
-        'WQ4gPkdoKvsTeLlNEnDJlFYn4VawArsIhki2KcHK8rJBoiJYif1KIHB-oJHjYD0QDLJz0quk0cnldFplbYaunA==', 
+        'http://172.207.210.69:8086', 
+        '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw==', 
         'daxuba'
     )
     try:
