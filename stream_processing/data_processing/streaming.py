@@ -102,7 +102,7 @@ def analyze_sentiment(text):
     return 1 if sentiment[0] == 1 else 0
 
 if __name__ == "__main__":
-    print("Real-Time Data Processing Application Started ...")
+    print("Initializing Real-Time Data Processing...")
 
     spark = SparkSession \
         .builder \
@@ -126,6 +126,8 @@ if __name__ == "__main__":
         .option("subscribe", input_kafka_topic_biden) \
         .option("startingOffsets", "latest") \
         .load()
+    print("Printing Schema of Biden Dataframe: ")
+    biden_df.printSchema()
     
     trump_df = spark \
         .readStream \
@@ -134,23 +136,28 @@ if __name__ == "__main__":
         .option("subscribe", input_kafka_topic_trump) \
         .option("startingOffsets", "latest") \
         .load()
+    print("Printing Schema of Trump Dataframe: ")
+    trump_df.printSchema()
 
     biden_df = biden_df.selectExpr("CAST(value AS STRING)") \
         .select(from_json(col("value"), tweet_schema).alias("data")) \
         .select("data.*") \
         .withColumn("sentiment", predict_udf("tweet"))
+    print("Printing Schema of transformed Biden Dataframe:")
     biden_df.printSchema()
 
     trump_df = trump_df.selectExpr("CAST(value AS STRING)") \
         .select(from_json(col("value"), tweet_schema).alias("data")) \
         .select("data.*") \
         .withColumn("sentiment", predict_udf("tweet"))
+    print("Printing Schema of transformed Trump Dataframe:")
     trump_df.printSchema()
         
     biden_df1 = biden_df \
         .withColumn("timestamp", date_format(current_timestamp(), 'yyyy-MM-dd HH:mm:ss')) \
         .withColumn("name", lit("biden")) \
         .select("state", "state_code", "sentiment", "timestamp", "name")
+    print("Printing Schema of biden_df1:")
     biden_df1.printSchema()
 
     biden_process_stream = biden_df1 \
@@ -165,6 +172,7 @@ if __name__ == "__main__":
         .withColumn("timestamp", date_format(current_timestamp(), 'yyyy-MM-dd HH:mm:ss')) \
         .withColumn("name", lit("trump")) \
         .select("state", "state_code", "sentiment", "timestamp", "name")
+    print("Printing Schema of trump_df1:")
     trump_df1.printSchema()
 
     trump_process_stream = trump_df1 \
@@ -191,4 +199,4 @@ if __name__ == "__main__":
     trump_process_stream.awaitTermination()
     kafka_writer_query.awaitTermination()
 
-    print("Real-Time Data Processing Application Completed.")
+    print("Real-Time Data Processing Application has finished.")
