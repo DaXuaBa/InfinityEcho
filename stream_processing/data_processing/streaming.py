@@ -125,6 +125,7 @@ if __name__ == "__main__":
         .option("kafka.bootstrap.servers", kafka_bootstrap_servers) \
         .option("subscribe", input_kafka_topic_biden) \
         .option("startingOffsets", "latest") \
+        .option("failOnDataLoss", "false") \
         .load()
     print("Printing Schema of Biden Dataframe: ")
     biden_df.printSchema()
@@ -135,6 +136,7 @@ if __name__ == "__main__":
         .option("kafka.bootstrap.servers", kafka_bootstrap_servers) \
         .option("subscribe", input_kafka_topic_trump) \
         .option("startingOffsets", "latest") \
+        .option("failOnDataLoss", "false") \
         .load()
     print("Printing Schema of Trump Dataframe: ")
     trump_df.printSchema()
