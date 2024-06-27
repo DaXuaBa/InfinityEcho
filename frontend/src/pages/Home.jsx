@@ -7,6 +7,7 @@ import StateResult from './StateResult';
 import ElectioneersPage from './ElectioneersPage';
 import GetData from './GetData';
 import ElectionSummary from './ElectionSummary';
+import RealTimeChart from './RealtimeChart';
 
 export default function Home() {
   const [showMap, setShowMap] = useState(true);
@@ -116,14 +117,12 @@ export default function Home() {
 
       <div className="mt-20 h-[6px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
       <ElectionSummary />
-      <p className='my-10 text-4xl text-teal-500 font-bold hover:underline text-center'>STATE RESULTS</p>
-      <div className="flex justify-center items-center my-8">
-        <iframe
-          src="http://172.207.210.69:3000/d-solo/ddpt5y96q5ipse/new-dashboard?orgId=1&refresh=1m&panelId=1"
-          width="1050"
-          height="400"
-        ></iframe>
-      </div>      
+      <div className="mb-14 flex flex-col items-center justify-center h-screen text-center">
+        <h1 className="mb-5 text-4xl text-teal-500 font-bold hover:underline text-center">STATE RESULTS</h1>
+        <div className="relative w-4/5 h-96">
+            <RealTimeChart />
+        </div>
+      </div>    
       <GetData />
       <StateResult />
     </div>
