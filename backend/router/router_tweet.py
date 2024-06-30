@@ -11,13 +11,13 @@ router = APIRouter()
 class AnyData(BaseModel):
     pass
 
+URL = 'http://172.207.210.69:8086'
+TOKEN = '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw=='
+ORG = 'daxuba'
+
 @router.get('/get_data')
 async def get_data():
-    client = connect_to_database(
-        'http://172.207.210.69:8086', 
-        '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw==', 
-        'daxuba'
-    )
+    client = connect_to_database(URL, TOKEN, ORG)
     result = query_data(client)
     json_data = []
     for table in result:
@@ -33,11 +33,7 @@ async def get_data():
 
 @router.get('/get_time')
 async def get_time_router():
-    client = connect_to_database(
-        'http://172.207.210.69:8086', 
-        '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw==', 
-        'daxuba'
-    )
+    client = connect_to_database(URL, TOKEN, ORG)
     result = query_time(client)
     json_data = []
     for table in result:
@@ -51,11 +47,7 @@ async def get_time_router():
     return json_data
 
 def fetch_and_process_csv_data(db: Session = Depends(get_db)):
-    client = connect_to_database(
-        'http://172.207.210.69:8086', 
-        '9AtNImvui60zbXXO-_n5WWoT2WSqlWCVi6xQvj4qxSYcBx3Vg-DHEEzQoXNqNbn7XKrb-K-0_H4U3KQtqOgiiw==', 
-        'daxuba'
-    )
+    client = connect_to_database(URL, TOKEN, ORG)
     try:
         csv_data = process_csv_data(client, db=db)
         close_connection(client)

@@ -4,7 +4,7 @@ from json import dumps
 import pandas as pd
 from configparser import ConfigParser
 
-conf_file_name = "X:\\2023-24\\Nam_4_HK2\\github\\InfinityEcho\\stream_processing\\send_data\\stream_app.conf"
+conf_file_name = "./InfinityEcho/stream_processing/send_data/stream_app.conf"
 config_obj = ConfigParser()
 config_read_obj = config_obj.read(conf_file_name)
 
