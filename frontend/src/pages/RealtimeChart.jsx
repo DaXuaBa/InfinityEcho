@@ -22,7 +22,7 @@ const RealTimeChart = () => {
             |> range(start: -30d)
             |> filter(fn: (r) => r["_measurement"] == "trump" or r["_measurement"] == "biden")
             |> group(columns: ["_measurement"])
-            |> aggregateWindow(every: 3m, fn: sum, createEmpty: false)
+            |> aggregateWindow(every: 1m, fn: sum, createEmpty: false)
             |> cumulativeSum(columns: ["_value"])
             |> yield(name: "cumulative_sum")
             `;
@@ -81,7 +81,7 @@ const RealTimeChart = () => {
             }
         }
     };
-    
+
 
     return (
         <div style={{ position: "relative", width: "1000px", height: "500px" }}>

@@ -4,10 +4,10 @@ from sqlalchemy.orm import sessionmaker
 from urllib.parse import quote_plus
 
 username = "root"
-password = "123456"
-host = "localhost"
-port = "3306"
-database_name = "daxu"
+password = "jAqSZpiuuqXOfyQFbtyMiKDSFwgvrxHd"
+host = "monorail.proxy.rlwy.net"
+port = "40415"
+database_name = "railway"
 encoded_password = quote_plus(password)
 SQLALCHEMY_DATABASE_URL = f"mysql+mysqlconnector://{username}:{encoded_password}@{host}:{port}/{database_name}"
 

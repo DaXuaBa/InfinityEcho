@@ -135,9 +135,9 @@ def call_api_trump(db: Session):
                     if not exists:
                         created_at_str = x['createdAt']
                         tweet = x['text']
-                        source = x.get('source', None)
                         likes = x['likeCount']
                         retweet_count = x['retweetCount']
+                        source = x.get('source', None)
                         user_id = x['author']['id']
                         user_name = x['author']['userName']
                         user_screen_name = x['author']['name']
@@ -162,7 +162,7 @@ def call_api_trump(db: Session):
 
                         # Tạo đối tượng TweetData và thêm vào phiên làm việc
                         new_tweet = TrumpTweetData(
-                            created_at=created_at, tweet_id=tweet_id, tweet=tweet, source=source, likes=likes, retweet_count=retweet_count,
+                            created_at=created_at, tweet_id=tweet_id, tweet=tweet, likes=likes, retweet_count=retweet_count, source=source,
                             user_id=user_id, user_name=user_name, user_screen_name=user_screen_name, user_description=user_description,
                             user_join_date=user_join_date, user_followers_count=user_followers_count, user_location=user_location,
                             latitude=latitude, longitude=longitude, state_1=state_1, state_2=state_2, country=country

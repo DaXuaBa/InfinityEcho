@@ -20,9 +20,9 @@ class BidenTweetData(Base):
     created_at = Column(DateTime)
     tweet_id = Column(String(255))
     tweet = Column(Text)    
-    source = Column(String(255))
     likes = Column(Integer)
     retweet_count = Column(Integer)
+    source = Column(String(255))
     user_id = Column(String(255))
     user_name = Column(String(255))
     user_screen_name = Column(String(255))
@@ -35,6 +35,7 @@ class BidenTweetData(Base):
     state_1 = Column(String(255))
     state_2 = Column(String(255))
     country = Column(String(255))
+    collected_at = Column(DateTime, default=func.now())
     status = Column(Integer, default=0)
 
 class TrumpTweetData(Base):
@@ -43,9 +44,9 @@ class TrumpTweetData(Base):
     created_at = Column(DateTime)
     tweet_id = Column(String(255))
     tweet = Column(Text)
-    source = Column(String(255))
     likes = Column(Integer)
     retweet_count = Column(Integer)
+    source = Column(String(255))
     user_id = Column(String(255))
     user_name = Column(String(255))
     user_screen_name = Column(String(255))
@@ -58,6 +59,7 @@ class TrumpTweetData(Base):
     state_1 = Column(String(255))
     state_2 = Column(String(255))
     country = Column(String(255))
+    collected_at = Column(DateTime, default=func.now())
     status = Column(Integer, default=0)
 
 class Summary(Base):
