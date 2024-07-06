@@ -99,7 +99,7 @@ def send_data_to_kafka(data):
                                  value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
         # Gửi dữ liệu vào Kafka topic
-        producer.send('BidenTopic', value=data)
+        producer.send('TrumpTopic', value=data)
 
         # Đóng producer
         producer.close()
