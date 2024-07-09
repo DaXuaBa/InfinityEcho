@@ -11,6 +11,7 @@ Prerequisite
 3. Install_Apache_Kafka.txt
 4. Install_InfluxDB.txt
 5. Install_Telegraf.txt
+6. Install_llama.cp.txt
 
 ## Clone the source code from Github
 
@@ -35,6 +36,10 @@ npm install
 ## Run Data Processing Pipeline application(Spark Streaming):
 
 spark-submit --master local[*] --packages org.apache.spark:spark-sql-kafka-0-10_2.13:3.5.1 ./InfinityEcho/stream_processing/data_processing/streaming.py
+
+## Start llama.cpp
+
+Run `.bat` file to start
 
 ## Run Website:
 

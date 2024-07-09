@@ -1,5 +1,5 @@
 Install Telegraf:
-=====================
+================
 
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.29.2_linux_amd64.tar.gz
 

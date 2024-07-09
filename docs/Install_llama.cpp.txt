@@ -1,0 +1,36 @@
+Install llama.cpp:
+=================
+
+Step 1: Download llama.cpp
+
+https://github.com/ggerganov/llama.cpp/releases/download/b3014/llama-b3014-bin-win-cuda-cu11.7.1-x64.zip
+
+Step 2: Extract the downloaded file
+
+Step 3: Download the model from Hugging Face
+
+https://huggingface.co/QuantFactory/Meta-Llama-3-8B-Instruct-GGUF-v2/resolve/main/Meta-Llama-3-8B-Instruct-v2.Q6_K.gguf
+
+Step 4: Create a .bat file to start
+
+@echo off
+cd /D "%~dp0"
+set CUDA_VISIBLE_DEVICES=0
+
+llama-cpp\server.exe ^
+  --host localhost ^
+  --port 8084 ^
+  --model .\models\Meta-Llama-3-8B-Instruct-v2.Q6_K.gguf ^
+  --alias llama-3-8b-chat ^
+  --ctx-size 8192 ^
+  --threads-http 2 ^
+  --n-gpu-layers 14 ^
+  --threads 6 ^
+  --threads-batch 6 ^
+  --batch-size 128 ^
+  --flash-attn ^
+  --no-mmap ^
+  --mlock ^
+  --log-disable
+
+Step 5: Start llama.cpp
