@@ -52,9 +52,6 @@ const RealTimeChart = () => {
         };
 
         fetchData();
-        const interval = setInterval(fetchData, 60000); // Fetch new data every minute
-
-        return () => clearInterval(interval);
     }, []);
 
     const options = {
