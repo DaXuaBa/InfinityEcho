@@ -1,0 +1,20 @@
+Install Telegraf:
+=====================
+
+wget https://dl.influxdata.com/telegraf/releases/telegraf-1.29.2_linux_amd64.tar.gz
+
+tar xf telegraf-1.29.2_linux_amd64.tar.gz
+
+cd /etc
+
+sudo mkdir telegraf
+
+cd
+
+cd telegraf-1.29.2/usr/bin/
+
+./telegraf config > telegraf.conf
+
+sudo mv telegraf.conf /etc/telegraf/
+
+./telegraf --config localhost:8086/api/v2/telegrafs/0ccd44a60ea20000

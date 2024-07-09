@@ -1,0 +1,30 @@
+Install MySQL:
+==============
+
+sudo apt update
+
+sudo apt install mysql-server
+
+sudo systemctl status mysql
+
+mysql --version
+
+# MySQL CLI,
+
+sudo apt install mysql-client
+
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by '123456';
+
+FLUSH PRIVILEGES;
+
+exit;
+
+sudo mysql -u root -p
+
+create database daxu;
+
+show databases;
+
+exit;
